@@ -5,7 +5,7 @@ const router = Router();
 
 const moduleRoutes = [
   {
-    path: "/product", //here will be routes and paths
+    path: "/products", //here will be routes and paths
     route: ProductRoute,
   },
 ];
