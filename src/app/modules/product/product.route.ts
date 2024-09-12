@@ -11,7 +11,9 @@ router.post(
   ProductControllers.createProduct
 );
 router.get("/", ProductControllers.getAllProducts);
+router.get("/featuredProducts", ProductControllers.getFeaturedProducts);
 router.get("/:id", ProductControllers.getSingleProduct);
+
 router.put(
   "/:id",
   validateRequest(productValidations.updateProductValidation),

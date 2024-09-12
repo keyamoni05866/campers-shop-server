@@ -17,6 +17,14 @@ const getAllProducts = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getFeaturedProducts = catchAsync(async (req, res) => {
+  const result = await ProductServices.featuredProducts();
+  res.status(201).json({
+    success: true,
+    message: "Featured Products Retrieved Successfully",
+    data: result,
+  });
+});
 const getSingleProduct = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await ProductServices.getSingleProductFromDB(id);
@@ -48,6 +56,7 @@ const deleteProduct = catchAsync(async (req, res) => {
 export const ProductControllers = {
   createProduct,
   getAllProducts,
+  getFeaturedProducts,
   getSingleProduct,
   updateProduct,
   deleteProduct,

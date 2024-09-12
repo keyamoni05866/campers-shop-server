@@ -32,6 +32,10 @@ const productSchema = new Schema<TProduct>(
     ratings: {
       type: Number,
     },
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
