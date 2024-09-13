@@ -8,3 +8,11 @@ export type TProduct = {
   ratings: number;
   isFeatured?: boolean;
 };
+
+export type TProductQuery = {
+  searchQuery?: string;
+  category?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  sortByOrder?: "asc" | "desc";
+};

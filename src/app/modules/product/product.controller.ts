@@ -10,7 +10,15 @@ const createProduct = catchAsync(async (req, res) => {
   });
 });
 const getAllProducts = catchAsync(async (req, res) => {
-  const result = await ProductServices.getAllProductsFromDB();
+  const { searchQuery, category, minPrice, maxPrice, sortByOrder } = req.query;
+
+  const result = await ProductServices.getAllProductsFromDB({
+    searchQuery: searchQuery as string,
+    category: category as string,
+    minPrice: minPrice ? Number(minPrice) : undefined,
+    maxPrice: maxPrice ? Number(maxPrice) : undefined,
+    sortByOrder: sortByOrder as "asc" | "desc",
+  });
   res.status(201).json({
     success: true,
     message: "Product Retrieved Successfully",

@@ -1,4 +1,4 @@
-import { TProduct } from "./product.intereface";
+import { TProduct, TProductQuery } from "./product.intereface";
 import { Product } from "./product.model";
 
 const createProductIntoDB = async (payload: TProduct) => {
@@ -6,8 +6,34 @@ const createProductIntoDB = async (payload: TProduct) => {
   return result;
 };
 
-const getAllProductsFromDB = async () => {
-  const result = await Product.find();
+const getAllProductsFromDB = async (allQuery: TProductQuery) => {
+  const { searchQuery, category, minPrice, maxPrice, sortByOrder } = allQuery;
+
+  const query: any = {};
+
+  // Search Query Functionality
+  if (searchQuery) {
+    query.$or = [
+      { name: { $regex: searchQuery, $options: "i" } },
+      { description: { $regex: searchQuery, $options: "i" } },
+    ];
+  }
+
+  // Filter by Category
+  if (category && category !== "All") {
+    query.category = category;
+  }
+
+  // Filter by price range
+  if (minPrice !== undefined || maxPrice !== undefined) {
+    query.price = {};
+    if (minPrice !== undefined) query.price.$gte = minPrice;
+    if (maxPrice !== undefined) query.price.$lte = maxPrice;
+  }
+
+  // Sort by price
+  const sort: any = sortByOrder === "asc" ? { price: 1 } : { price: -1 };
+  const result = await Product.find(query).sort(sort);
   return result;
 };
 const featuredProducts = async () => {
